@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement Review Loop"
+  short_description: "Scoped implementation with iterative review and fixes"
+  default_prompt: "Use $implement-review-loop to plan, implement, and review this change until it is clean or safely stopped."
