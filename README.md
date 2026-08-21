@@ -8,6 +8,7 @@ My AI setup, kept in one place: configs, reusable skills, tooling, and notes.
 | --- | --- |
 | `claude-code/` | Claude Code config — `CLAUDE.md`, `settings.json`, hooks, statusline |
 | `skills/` | Reusable skills that are worth carrying between machines and projects |
+| `workflows/` | Claude Code workflow scripts (multi-agent orchestration via the `Workflow` tool) |
 
 Keeping this flat for now — more categories (Codex, proxy, notifier, other
 tooling, notes) will get added back once there's real content for them.
