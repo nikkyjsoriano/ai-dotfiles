@@ -2,7 +2,7 @@ export const meta = {
   name: 'implement-review-loop',
   description: 'Plan/Scope, implement (optional), and iteratively review a fix until clean',
   whenToUse:
-    'Pass one of: { issue } (number/URL), { planFile } (path to an existing plan - Plan phase is skipped, the file is used as-is), or { scope, skip: ["implement"] } (free-text scope description, reviews the current working tree with no new implementation). issue/planFile can be combined with skip: ["implement"] too - they then serve as the scope reference for a review-only run. Per-phase model/effort: { plan, implement, review, fix } each optionally { model, effort }; implement/review also take { agentType, focusPrompt }. fixScope: "all" (default) or "urgent-only" (only critical findings get fixed; minor/nit are reported but left alone). The reviewer invokes the code-review skill against the scoped diff each round, filters its findings to the declared scope, and assigns severity. A markdown report is written to .claude-workflow/ at the end regardless of outcome.',
+    'Pass one of: { issue } (number/URL), { planFile } (path to an existing plan - Plan phase is skipped, the file is used as-is), or { scope, skip: ["implement"] } (free-text scope description, reviews the current working tree with no new implementation). issue/planFile can be combined with skip: ["implement"] too - they then serve as the scope reference for a review-only run. Per-phase model/effort: { plan, implement, review, fix } each optionally { model, effort }; implement/review also take { agentType, focusPrompt }. fixScope: "all" (default) or "urgent-only" (only critical findings get fixed; minor/nit are reported but left alone). The reviewer invokes the code-review skill against the scoped diff each round, filters its findings to the declared scope, and assigns severity. A markdown report is written to .implement-review-loop/ at the end regardless of outcome.',
   phases: [
     { title: 'Plan', detail: 'Fetches the GitHub issue and writes a scope-guard plan (skipped if planFile is given, or if implement is skipped)' },
     { title: 'Scope', detail: 'Resolves review scope from scope/planFile/issue when Implement is skipped - no plan file written' },
@@ -18,7 +18,7 @@ const MAX_REPEATS_PER_FINDING = 3
 // Absolute backstop so a pathological run can never be unbounded. Far above any real use.
 const ABSOLUTE_MAX_ROUNDS = 25
 // Workspace for plan/report files; excluded from the review diff so it never reads as scope creep.
-const WORK_DIR = '.claude-workflow'
+const WORK_DIR = '.implement-review-loop'
 // 'ultra' is a separately-billed, interactively-confirmed cloud mode - it cannot run from inside a
 // headless subagent, so it's excluded from what a phase config may request.
 const ALLOWED_EFFORTS = new Set(['low', 'medium', 'high', 'xhigh', 'max'])
