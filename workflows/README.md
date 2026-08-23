@@ -9,7 +9,7 @@ that layout so they can be symlinked or copied into place.
 
 | Workflow | Invocation | What it does |
 | --- | --- | --- |
-| `implement-review-loop.js` | `Workflow({ name: "implement-review-loop", args: ... })` | Plans/scopes a fix, optionally implements it, then loops Review (invokes the `code-review` skill) <-> Fix until clean. Three input modes: a GitHub issue, an existing plan file, or a free-text `scope` for reviewing already-written code (`skip: ["implement"]`). Per-phase model/effort overrides, a `fixScope` filter (`all` vs `urgent-only`), and a markdown report written to `.claude-workflow/` at the end regardless of outcome. |
+| `implement-review-loop.js` | `Workflow({ name: "implement-review-loop", args: ... })` | Plans/scopes a fix, optionally implements it, then loops Review (invokes the `code-review` skill) <-> Fix until clean. Three input modes: a GitHub issue, an existing plan file, or a free-text `scope` for reviewing already-written code (`skip: ["implement"]`). Per-phase model/effort overrides, a `fixScope` filter (`all` vs `urgent-only`), and a markdown report written to `.implement-review-loop/` at the end regardless of outcome. |
 
 Note: the Review phase depends on the `code-review` skill being available, and
 issue-driven runs need an authenticated `gh` CLI.
