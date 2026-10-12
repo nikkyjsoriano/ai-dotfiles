@@ -1,0 +1,4 @@
+interface:
+  display_name: "3D Printing"
+  short_description: "Edit printable models and record revisions and fit"
+  default_prompt: "Use $3d-printing to edit this model and record the transformation in my 3D Prints folder."
