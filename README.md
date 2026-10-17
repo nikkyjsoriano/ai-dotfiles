@@ -8,6 +8,7 @@ My AI setup, kept in one place: configs, reusable skills, tooling, and notes.
 | --- | --- |
 | `claude-code/` | Claude Code config — `CLAUDE.md`, `settings.json`, hooks, statusline |
 | `codex/` | Codex CLI config — skills (synced via `skillshare`), custom agents |
+| `headroom-rtk/` | **Critical.** Headroom proxy + RTK hooks every Claude/Codex session runs through, with install steps and a `verify.sh` |
 | `skills/` | Reusable skills that are worth carrying between machines and projects |
 | `workflows/` | Claude Code workflow scripts (multi-agent orchestration via the `Workflow` tool) |
 
@@ -26,4 +27,6 @@ notes) will get added back once there's real content for them.
 
 ## Fresh machine
 
-Setup instructions land here once the first configs are in.
+1. **[`headroom-rtk/`](headroom-rtk/README.md) first.** Every agent session
+   depends on it. Finish with `headroom-rtk/verify.sh --live`.
+2. The rest of the setup steps land here once more configs are in.

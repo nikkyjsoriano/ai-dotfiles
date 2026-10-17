@@ -40,7 +40,8 @@ still degrades safely to reviewing the diff directly.
 
 ## Hooks
 
-Out of scope for now. Codex hooks are beta and off by default
-(`~/.codex/config.toml`). Note: `~/.codex/hooks.json` already exists on some
-machines with an inert `Stop` hook pointing at `claude-notify`, left over from an
-earlier experiment — it has no effect while the feature flag is unset.
+Codex hooks are beta and off by default. As of 2026-10-17 they're turned on
+(`hooks = true` in `~/.codex/config.toml`) by `headroom init -g codex`, and
+`~/.codex/hooks.json` carries the RTK and Headroom hooks. See
+[`headroom-rtk/`](../headroom-rtk/README.md). Turning the flag on also activates
+the old `Stop` hook pointing at `claude-notify`, which was inert before.
