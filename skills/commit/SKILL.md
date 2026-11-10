@@ -1,7 +1,7 @@
 ---
 name: commit
 description: This skill should be used when the user invokes "/commit" or explicitly asks to "squash commits", "create clean commit", "commit with message", or needs to follow project commit conventions with proper formatting.
-version: 3.0.0
+version: 3.1.0
 ---
 
 # Commit Skill
@@ -16,11 +16,10 @@ version: 3.0.0
 
 ## Step 1 — Branch Setup
 
-Determine if there is an issue number associated with this work:
-- If the user references an issue (e.g. "issue 47", "#47", or the work is clearly tied to one), the branch MUST be: `nikky/ISS-{N}-{slug}` where `{slug}` is 2–4 words derived from the issue title or the changes being made.
+Every branch must carry an issue number. Find it from the user's message (e.g. "issue 47", "#47"), from the current branch name (`nikky/ISS-{N}-...`), or from the work being clearly tied to one.
+- The branch MUST be: `nikky/ISS-{N}-{slug}` where `{slug}` is 2–4 words derived from the issue title or the changes being made.
   - Example: `nikky/ISS-47-add-speed-histogram`, `nikky/ISS-12-fix-ble-reconnect`
-- If there is no issue reference, use: `nikky/{slug}` (2–3 word slug from the changes)
-  - Example: `nikky/lint-baseline`, `nikky/fix-scan-popup`
+- If no issue number can be found, stop and ask the user for one (or whether to open an issue). Never create or push a branch without an issue number, and never guess one.
 
 Check the current branch:
 ```bash
@@ -139,7 +138,13 @@ git reset --soft origin/main
 git commit -m "<message>"
 ```
 
-Verify author matches local git config (`git config user.name` / `git config user.email`). Expected: `nikkyjsoriano <nikkyjsoriano@gmail.com>`.
+Verify the author comes only from local git config, with no hardcoded name or email and no co-author:
+```bash
+git config user.name && git config user.email
+git log -1 --format='%an <%ae>'
+git log -1 --format=%B | grep -i 'co-authored-by' && echo "co-author trailer found, fix it"
+```
+The `%an <%ae>` line must equal the `user.name` and `user.email` values exactly, and the grep must print nothing. If either check fails, amend the commit with `git commit --amend --reset-author` (and remove any trailer) before continuing.
 
 **Hard gate — do not skip:** confirm exactly one commit ahead of the base branch before proceeding to push or PR creation:
 ```bash
@@ -171,6 +176,6 @@ PR parameters:
 
 Do not assign the PR or apply labels unless the user explicitly asks for it. If they do, use:
 ```bash
-gh pr edit <PR> --add-assignee nikkyjsoriano
+gh pr edit <PR> --add-assignee @me
 gh pr edit <PR> --add-label <label>
 ```
